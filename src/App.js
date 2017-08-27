@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Container, Column, Row, RuleInput,
   RuleLabel, StyleInput, Button, Document,
   Markup, Editor } from './styled'
+import hljs from 'highlight.js'
 
 class App extends Component {
   state = {
@@ -76,9 +77,15 @@ class App extends Component {
     })
   }
 
+  convertToMarkup = (text = '') => {
+    return {
+      __html: hljs.highlightAuto(text).value
+    }
+  }
+
   render () {
-    let {value} = this.state
-    let {handleChange, newFields, rules} = this
+    let {editor} = this.state
+    let {handleChange, newFields, rules, convertToMarkup} = this
     return (
       <Container>
         <Column>
@@ -96,10 +103,12 @@ class App extends Component {
           <Document>
             <Editor
               name={'editor'}
-              value={value}
+              value={editor}
               onChange={handleChange}
             />
-            <Markup />
+            <Markup
+              dangerouslySetInnerHTML={convertToMarkup(editor)}
+            />
           </Document>
         </Column>
       </Container>
