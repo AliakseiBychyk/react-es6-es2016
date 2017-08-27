@@ -3,6 +3,11 @@ import { Container, Column, Row, RuleInput,
   RuleLabel, StyleInput, Button, Document,
   Markup, Editor } from './styled'
 import hljs from 'highlight.js'
+import {rando} from './utils'
+
+console.log(rando)
+console.log(rando.color(0, 255))
+console.log(rando.color(0, 255, 'hex'))
 
 class App extends Component {
   state = {
@@ -21,7 +26,7 @@ class App extends Component {
     })
   }
 
-  rules = () => {
+  get rules () {
     let {rules} = this.state
     let array = []
     let fields = ['name', 'begin', 'end']
@@ -141,7 +146,7 @@ class App extends Component {
     return (
       <Container>
         <Column>
-          {rules()}
+          {rules}
           <Button
             onClick={newFields}
           >
