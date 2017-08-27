@@ -1,6 +1,6 @@
 const shakespeareApi = 'http://api.graph.cool/simple/v1/shakespeare'
 
-let options = {
+let options = () => {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -8,4 +8,11 @@ let options = {
   body: JSON.stringify({
 
   })
+}
+
+function randomInt(min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(
+    Math.random()*(max - min + 1)) + min
 }

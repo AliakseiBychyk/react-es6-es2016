@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
-import {Container, Column, Row, RuleInput,
+import { Container, Column, Row, RuleInput,
   RuleLabel, StyleInput, Button, Document,
-  Markup, Editor} from './styled'
+  Markup, Editor } from './styled'
 
 class App extends Component {
+  state = {
+    editor: ''
+  }
+
+  handleChange = event => {
+    let { name, value } = event.target
+    this.setState({
+      [name]: value
+    })
+  }
+
   render () {
+    let {value} = this.state
+    let {handleChange} = this
     return (
       <Container>
         <Column>
@@ -17,7 +30,11 @@ class App extends Component {
             Random Text
           </Button>
           <Document>
-            <Editor />
+            <Editor
+              name={'Editor'}
+              value={value}
+              onChange={handleChange}
+            />
             <Markup />
           </Document>
         </Column>
