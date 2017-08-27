@@ -83,6 +83,44 @@ class App extends Component {
     }
   }
 
+  language = newRules => {
+    return () => ({
+      contains: [
+        ...newRules
+      ]
+    })
+  }
+
+  registerLanguage = state => {
+    let {rules} = state
+    let ruleObjects = []
+    for (let i = 0; i < rules; i++) {
+      let newRule = {
+        className: state[`name${i}`],
+        begin: state[`name${i}`],
+        end: state[`end${i}`]
+      }
+      let {className, begin, end} = newRule
+      if (
+        className.length > 1 &&
+        begin.length > 1 &&
+        end.length > 1
+      ) {
+        begin = new RegExp(begin)
+        end = new RegExp(end)
+        ruleObjects.push(newRule)
+      }
+    }
+    hljs.registerLanguage('language', this.language(ruleObjects))
+    hljs.configure({
+      languages: ['language']
+    })
+  }
+
+  componentWillUpdate (nextProps, nextState) {
+    this.registerLanguage(nextState)
+  }
+
   render () {
     let {editor} = this.state
     let {handleChange, newFields, rules, convertToMarkup} = this
